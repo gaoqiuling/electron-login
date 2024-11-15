@@ -23,6 +23,8 @@ const form = reactive({
 const systemLoginUrlMap = new Map([
   ["zhigoufront", "http://39.107.45.229:8070/client/login"],
   ["zhigouadmin", "http://39.107.45.229:8070/login"],
+  ["financefront", "http://39.107.45.229:8090/client/login"],
+  ["financeadmin", "http://39.107.45.229:8090/login"],
   ["baoli", "http://39.107.45.229:8081/login"],
 ]);
 
@@ -64,7 +66,7 @@ const search = async () => {
       password: form.password,
     },
   });
-  form.auth = "Bearer " + res.token;
+  form.auth = "Bearer " + (res.token ? res.token : res.data.token);
   store.dispatch("addUser", {
     type: form.systemName,
     name: form.name,
@@ -96,6 +98,8 @@ const copyPasswordToClipboard = () => {
         <el-radio-group v-model="form.systemName" @change="systemChange()">
           <el-radio value="zhigoufront">智购前台</el-radio>
           <el-radio value="zhigouadmin">智购后台</el-radio>
+          <el-radio value="financefront">金融前台</el-radio>
+          <el-radio value="financeadmin">金融后台</el-radio>
           <el-radio value="baoli">保理后台</el-radio>
         </el-radio-group>
       </el-form-item>
